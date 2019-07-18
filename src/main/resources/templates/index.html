@@ -1,0 +1,19 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Exemplo</title>
+    </head>
+    <body>
+
+        <h1 th:text = "${sistema}"></h1>
+        <br>
+        <h1>Lista  de clientes</h1>
+
+        <ul th:each = "c: ${clientes}">
+            <div th:object="${c}">
+                <li> <span th:text="*{nome}"> </span>  :  <span th:text="*{cpf}"> </span> </li>
+            </div>
+        </ul>
+
+
+    </body>
+</html>
