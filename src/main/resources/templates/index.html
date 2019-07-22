@@ -11,7 +11,7 @@
         <ul th:each = "c: ${clientes}">
             <div th:object="${c}">
                 <li>
-                    <span th:text="*{nome}"> </span>  :
+                    <a th:href="@{/animais-listar(clientId=${c.id})}"><span th:text="*{nome}"> </span></a>  :
                     <span th:text="*{cpf}"> </span>
                     <a th:href="@{/cliente-excluir(id=${c.id})}">X</a>
                 </li>
