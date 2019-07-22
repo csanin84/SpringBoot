@@ -1,11 +1,13 @@
 package br.com.tt.petshop.controller;
 
+import br.com.tt.petshop.exeption.ClienteExeption;
 import br.com.tt.petshop.model.Cliente;
 import br.com.tt.petshop.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,4 +32,27 @@ public class ClienteController {
 
         return "index";
     }
+
+    @GetMapping("/cliente-adicionar")
+    public String paginaAdicionar(Model model){
+        return "cliente-adicionar";
+    }
+
+    @PostMapping("/cliente-form")
+    public String clienteForm(Cliente novoCliente, Model model){
+        try{
+            clienteService.adicionar(novoCliente);
+        }catch (ClienteExeption e){
+            model.addAttribute("erro", e.getMessage());
+        }
+
+        return "cliente-adicionar";
+    }
+
+    @GetMapping("/cliente-excluir")
+    public RedirectView excluirCliente(@RequestParam Long id){
+        clienteService.remover(id);
+        return new RedirectView("/");
+    }
+
 }

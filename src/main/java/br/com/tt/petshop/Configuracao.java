@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Configuracao {
-    @Bean
+   /* @Bean
     public ClienteService newClienteService(){
-        return new ClienteService();
-    }
+        return new ClienteService(clienteRepository);
+    }*/
 }
