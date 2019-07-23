@@ -4,6 +4,7 @@ import br.com.tt.petshop.enums.EspecieEnum;
 
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Objects;
 
 public class Animal {
     private String nome;
@@ -16,6 +17,10 @@ public class Animal {
         this.dataNascimento = dataNascimento;
         this.especie = especie;
         this.clientId = clienteId;
+    }
+
+    public Animal() {
+
     }
 
     public String getNome() {
@@ -48,5 +53,29 @@ public class Animal {
 
     public void setClientId(Long clientId) {
         this.clientId = clientId;
+    }
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "nome='" + nome + '\'' +
+                ", dataNascimento=" + dataNascimento +
+                ", especie=" + especie +
+                ", clientId=" + clientId +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Animal animal = (Animal) o;
+        return Objects.equals(nome, animal.nome) &&
+                Objects.equals(clientId, animal.clientId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome, clientId);
     }
 }

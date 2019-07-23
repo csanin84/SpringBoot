@@ -15,7 +15,10 @@ public class AnimalService {
     }
 
     public List<Animal> listar(Long clientId){
-
         return animalRepository.listar(clientId);
+    }
+
+    public void adicionar(Animal animal){
+        animalRepository.save(animal);
     }
 }

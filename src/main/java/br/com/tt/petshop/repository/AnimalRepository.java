@@ -26,4 +26,20 @@ public class AnimalRepository {
 
         return animaisDoCliente;
     }
+
+    public void save(Animal animal){
+        animais.add(animal);
+
+    }
+
+    public List<Animal> findAll() {
+        return animais;
+    }
+
+
+    public void delete(Animal animal) {
+        animais.remove(animal);
+    }
+
+
 }
