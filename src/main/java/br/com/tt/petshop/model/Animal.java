@@ -1,6 +1,7 @@
 package br.com.tt.petshop.model;
 
 import br.com.tt.petshop.enums.EspecieEnum;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -8,6 +9,7 @@ import java.util.Objects;
 
 public class Animal {
     private String nome;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dataNascimento;
     private EspecieEnum especie;
     private Long clientId;

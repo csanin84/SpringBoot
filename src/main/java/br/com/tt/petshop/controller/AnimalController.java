@@ -33,6 +33,9 @@ public class AnimalController {
         animal.setClientId(animais.get(0).getClientId());
         mv.addObject("animal", animal);
 
+        List<String> especies = animalService.listarEspecies();
+        mv.addObject("especies", especies);
+
         return mv ;
     }
 
@@ -40,6 +43,6 @@ public class AnimalController {
     public String adicionar(Animal animal){
         System.out.println(animal.toString());
         animalService.adicionar(animal);
-        return "redirect:/animais-listar?clientId="+animal.getClientId();
+        return String.format("redirect:/animais-listar?clientId=%d",animal.getClientId());
     }
 }

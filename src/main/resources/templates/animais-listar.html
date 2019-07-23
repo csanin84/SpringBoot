@@ -1,36 +1,37 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Exemplo</title>
-</head>
-<body>
+    <head>
+        <title>Exemplo</title>
+    </head>
+    <body>
 
 
-<br>
-<h1>Lista de Animais</h1>
+        <br>
+        <h1>Lista de Animais</h1>
 
-<!--formulario-->
-<form method="POST"
-      th:object="${animal}"
-      th:action="@{/animais-listar}" >
-        Nome:              <input type="text" th:field="*{nome}"/><br>
-        Data do Nascimento:<input type="date"  th:value="*{dataNascimento}"/><br>
-        Especie:           <input type="text" th:field="*{especie}"/><br>
-       <input type="hidden" th:field="*{clientId}"/><br>
-        <button type="submit">Adicionar</button>
-</form>
-<br>
-
-
-<ul th:each = "a: ${animais}">
-        <li>
-            <span th:text="${a.nome}"> </span>
-
-        </li>
-    </div>
-</ul>
-<a th:href="@{/animal-adicionar(id=${clientId})}"></a>
+        <!--formulario-->
+        <form method="POST"
+              th:object="${animal}"
+              th:action="@{/animais-listar}" >
+            Nome:              <input type="text" th:field="*{nome}"/><br>
+            Data do Nascimento: <input type="date"  th:field="*{dataNascimento}"/><br>
+            Especie:
+            <select th:field="*{especie}" >
+                <option th:each="especie : ${especies}" th:value="${especie}" th:text="${especie}"></option>
+            </select>
+            <input type="hidden" th:field="*{clientId}"/><br>
+            <br>
+            <button type="submit">Adicionar</button>
+        </form>
+        <br>
 
 
 
-</body>
+        <ul th:each = "a: ${animais}">
+            <li>
+                <span th:text="${a.nome}"> </span>
+            </li>
+        </ul>
+        <a th:href="@{/animal-adicionar(id=${clientId})}"></a>
+
+    </body>
 </html>
