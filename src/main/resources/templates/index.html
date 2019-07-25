@@ -5,20 +5,36 @@
     <body>
 
         <h1 th:text = "${sistema}"></h1>
-        <br>
-        <h1>Lista  de clientes</h1>
 
-        <ul th:each = "c: ${clientes}">
-            <div th:object="${c}">
-                <li>
-                    <a th:href="@{/animais-listar(clientId=${c.id})}"><span th:text="*{nome}"> </span></a>  :
-                    <span th:text="*{cpf}"> </span> --
-                    <span th:text="*{inadimplente}"> </span>
+        <table class="table">
+
+            <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>CPF</th>
+                <th>Inadimplente</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each = "c: ${clientes}" >
+                <td>
+                    <a th:href="@{/animais-listar(clientId=${c.id})}"><span th:text="${c.nome}"> </span></a>
+                </td>
+                <td>
+                    <span th:text="${c.cpf}"> </span>
+                </td>
+                <td>
+                    <span th:text="${c.inadimplente}"> </span>
+                </td>
+                <td>
                     <a th:href="@{/cliente-excluir(id=${c.id})}"> X </a>
-                </li>
-            </div>
-        </ul>
+                </td>
+            </tr>
+            </tbody>
 
+        </table>
         <a href="/cliente-adicionar">Adicionar</a>
 
 
