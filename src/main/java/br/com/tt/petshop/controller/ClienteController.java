@@ -39,14 +39,14 @@ public class ClienteController {
     }
 
     @PostMapping("/cliente-form")
-    public String clienteForm(Cliente novoCliente, Model model){
+    public RedirectView clienteForm(Cliente novoCliente, Model model){
         try{
             clienteService.adicionar(novoCliente);
         }catch (ClienteExeption e){
             model.addAttribute("erro", e.getMessage());
         }
 
-        return "cliente-adicionar";
+        return new RedirectView("/");
     }
 
     @GetMapping("/cliente-excluir")

@@ -8,6 +8,7 @@
         <form th:action="@{/cliente-form}" method="post">
             Nome: <input name= "nome"><br>
             CPF: <input name= "cpf"><br>
+            <input type="checkbox" name="inadimplente" value="true">Inadimpemte<br>
             <input type = "submit" value="Adicionar"><br>
         </form>
         <label th:text="${erro}" style="color:red"></label>

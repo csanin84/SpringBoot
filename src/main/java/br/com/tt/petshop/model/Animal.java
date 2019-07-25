@@ -4,10 +4,11 @@ import br.com.tt.petshop.enums.EspecieEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Objects;
 
 public class Animal {
+    private static Long contador = new Long(0);
+    private Long id = new Long(0);
     private String nome;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dataNascimento;
@@ -15,6 +16,8 @@ public class Animal {
     private Long clientId;
 
     public Animal(String nome, LocalDate dataNascimento, EspecieEnum especie, Long clienteId) {
+        contador++;
+        this.id = contador;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.especie = especie;
@@ -22,7 +25,16 @@ public class Animal {
     }
 
     public Animal() {
+        contador++;
+        setId(contador);
+    }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -72,12 +84,11 @@ public class Animal {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Animal animal = (Animal) o;
-        return Objects.equals(nome, animal.nome) &&
-                Objects.equals(clientId, animal.clientId);
+        return id.equals(animal.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nome, clientId);
+        return Objects.hash(id);
     }
 }

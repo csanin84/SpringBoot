@@ -9,6 +9,7 @@
         <h1>Lista de Animais</h1>
 
         <!--formulario-->
+        <label th:text="${erro}" style="color:red"></label>
         <form method="POST"
               th:object="${animal}"
               th:action="@{/animais-listar}" >
@@ -29,9 +30,10 @@
         <ul th:each = "a: ${animais}">
             <li>
                 <span th:text="${a.nome}"> </span>
+                <a th:href="@{/animal-excluir(id=${a.id})}">X</a>
             </li>
         </ul>
-        <a th:href="@{/animal-adicionar(id=${clientId})}"></a>
+
 
     </body>
 </html>

@@ -1,6 +1,7 @@
 package br.com.tt.petshop.repository;
 
 import br.com.tt.petshop.enums.EspecieEnum;
+import br.com.tt.petshop.exeption.AnimalExeption;
 import br.com.tt.petshop.model.Animal;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,8 @@ public class AnimalRepository {
         List<Animal> animaisDoCliente = animais.stream()
                 .filter(a -> a.getClientId() ==  clientId)
                 .collect(Collectors.toList());
+        if (animaisDoCliente.size()==0)
+            throw new AnimalExeption("Cliente no tiene Animales");
 
         return animaisDoCliente;
     }

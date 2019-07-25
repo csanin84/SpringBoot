@@ -3,36 +3,52 @@ package br.com.tt.petshop.model;
 import java.util.Objects;
 
 public class Cliente {
-    private static Long contador = new Long(0);
-    private Long id = new Long(0);
+   private Long id = new Long(0);
     private String nome;
     private String cpf;
+    private Boolean inadimplente = false;
 
-    public Cliente(){contador++;}
+    public Cliente(){}
 
-    public static Cliente newIdClienteNome(String nome){
+    public static Cliente newClienteNome(String nome){
         Cliente cliente = new Cliente();
-        cliente.setId(contador);
         cliente.setNome(nome);
         return  cliente;
     }
 
-    public static Cliente newIdClienteNomeCpf(String nome, String cpf){
+    public static Cliente newClienteNomeCpf(String nome, String cpf){
         Cliente cliente = new Cliente();
-        cliente.setId(contador);
         cliente.setNome(nome);
         cliente.setCpf(cpf);
         return  cliente;
     }
 
+    public static Cliente newIdClienteNomeCpfInadimplente(Long id, String nome, String cpf, Boolean inadimplente){
+        Cliente cliente = new Cliente();
+        cliente.setId(id);
+        cliente.setNome(nome);
+        cliente.setCpf(cpf);
+        cliente.setInadimplente(inadimplente);
+        return  cliente;
+    }
+
+
     public Long getId() {
         return id;
     }
 
-
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Boolean getInadimplente() {
+        return inadimplente;
+    }
+
+    public void setInadimplente(Boolean inadimplente) {
+        this.inadimplente = inadimplente;
+    }
+
     public String getNome() {
         return nome;
     }

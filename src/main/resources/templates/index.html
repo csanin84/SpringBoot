@@ -12,8 +12,9 @@
             <div th:object="${c}">
                 <li>
                     <a th:href="@{/animais-listar(clientId=${c.id})}"><span th:text="*{nome}"> </span></a>  :
-                    <span th:text="*{cpf}"> </span>
-                    <a th:href="@{/cliente-excluir(id=${c.id})}">X</a>
+                    <span th:text="*{cpf}"> </span> --
+                    <span th:text="*{inadimplente}"> </span>
+                    <a th:href="@{/cliente-excluir(id=${c.id})}"> X </a>
                 </li>
             </div>
         </ul>
