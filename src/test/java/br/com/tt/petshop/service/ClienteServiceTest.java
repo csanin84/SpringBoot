@@ -175,4 +175,15 @@ public class ClienteServiceTest {
     }
     /*-------------------------------------fin cenario adicionar-----------------------------------*/
 
+    @Test
+    public void deveriaEncontrarClientePeloId(){
+        Long clienteId = 1L;
+        Cliente cliente = Cliente.newIdClienteNomeCpfInadimplente(clienteId,"Carlos Sanin",
+                "000.111.222-38", false);
+
+        Mockito.when(clienteRepository.findId(clienteId)).thenReturn(cliente);
+
+        assertEquals("Cliente não fue achado", cliente, clienteService.findId(clienteId));
+    }
 }
+
