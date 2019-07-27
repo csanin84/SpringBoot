@@ -34,7 +34,7 @@ public class ClienteService {
 
         clienteRepository.save(novoCliente);
     }
-    public boolean validarNome(String nome) throws ClienteExeption{
+    private boolean validarNome(String nome) throws ClienteExeption{
         if(Objects.isNull(nome))
             throw new ClienteExeption("Nombre nulo");
 
@@ -48,7 +48,7 @@ public class ClienteService {
         return true;
     }
 
-    public boolean validarCpf(String cpf) throws ClienteExeption {
+    private boolean validarCpf(String cpf) throws ClienteExeption {
         String sizeCpf = cpf.replaceAll("\\D","");
 
         if(sizeCpf.length()!=11)
