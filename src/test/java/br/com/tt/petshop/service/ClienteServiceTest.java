@@ -185,5 +185,16 @@ public class ClienteServiceTest {
 
         assertEquals("Cliente não fue achado", cliente, clienteService.findId(clienteId));
     }
+
+    @Test
+    public void deveriaNaoEncontrarClientePeloId(){
+        Long clienteId = 1L;
+
+        Mockito.when(clienteRepository.findId(clienteId)).thenReturn(null);
+
+        Cliente clienteAchado = clienteService.findId(clienteId);
+
+        assertEquals("Cliente não fue achado", null, clienteAchado);
+    }
 }
 
