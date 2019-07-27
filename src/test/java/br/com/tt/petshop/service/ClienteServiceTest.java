@@ -152,8 +152,7 @@ public class ClienteServiceTest {
     }
 
     @Test
-    public void deveriaLacarClienteExeptionNotInadimplente(){
-        try{
+    public void deveriaLacarClienteExeptionIsAdimplente(){
             Long clienteId = 1L;
             Cliente cliente = Cliente.newIdClienteNomeCpfInadimplente(1L,"Carlos Sanin",
                     "000.111.222-38", false);
@@ -163,10 +162,6 @@ public class ClienteServiceTest {
             clienteService.validarClienteInadimplente(clienteId);
 
            assertTrue(clienteService.validarClienteInadimplente(clienteId));
-
-        }catch (AnimalExeption e){
-            assertEquals("Expção não coincide","Cliente inadimplente", e.getMessage());
-        }
     }
 
     @Test
