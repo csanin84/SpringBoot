@@ -62,7 +62,8 @@ public class AnimalService {
     public boolean validarNomeAnimalTresLetras(String nome){
         String[] partesNome = nome.split(" ");
         for(String parte: partesNome){
-            if(parte.length()<3) throw new AnimalExeption("O nome debe ter ao menos 3 caracteres");
+            if(parte.length()<3)
+                throw new AnimalExeption("O nome debe ter ao menos 3 caracteres");
         }
         return true;
     }

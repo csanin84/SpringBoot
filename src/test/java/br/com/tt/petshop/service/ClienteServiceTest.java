@@ -37,7 +37,7 @@ public class ClienteServiceTest {
     public void deveriaRetornarListaVacia(){
 
        // clienteRepository = new ClienteRepository();
-        clienteService = new ClienteService(clienteRepository);
+        //clienteService = new ClienteService(clienteRepository);
 
         List<Cliente> clientes = clienteService.listar();
 
