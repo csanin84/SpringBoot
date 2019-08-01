@@ -1,6 +1,7 @@
 package br.com.tt.petshop.repository;
 
 import br.com.tt.petshop.model.Cliente;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -10,17 +11,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Repository
-public class ClienteRepository {
-    private static Long contadorCliente = 3L;
+public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
-    List<Cliente> clientes = new ArrayList(
-            Arrays.asList(Cliente.newIdClienteNomeCpfInadimplente(1L,"carlos","654.564.153.-15", false),
-            Cliente.newIdClienteNomeCpfInadimplente(2L,"raul","452.445.454.-45", false ),
-            Cliente.newIdClienteNomeCpfInadimplente(3L,"mario","546.778.567-57",true)));
-
-
-
-
+    /*
     public void save(Cliente cliente){
         contadorCliente++;
         cliente.setId(contadorCliente);
@@ -47,4 +40,6 @@ public class ClienteRepository {
     public void delete(Cliente cliente) {
         clientes.remove(cliente);
     }
+    */
+
 }

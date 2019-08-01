@@ -3,12 +3,14 @@ package br.com.tt.petshop.service;
 import br.com.tt.petshop.exeption.AnimalExeption;
 import br.com.tt.petshop.exeption.ClienteExeption;
 import br.com.tt.petshop.model.Cliente;
+import br.com.tt.petshop.model.ClienteNull;
 import br.com.tt.petshop.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,8 +60,8 @@ public class ClienteService {
     }
 
     public boolean validarClienteInadimplente(Long clientId){
-        Cliente cliente = clienteRepository.findId(clientId);
-        if (cliente.getInadimplente())
+        Optional<Cliente> optCliente = clienteRepository.findById(clientId);
+        if (optCliente.isPresent() && optCliente.get().getInadimplente())
             throw new AnimalExeption("Cliente inadimplente");
         return true;
     }
@@ -72,6 +74,8 @@ public class ClienteService {
     }
 
     public Cliente findId(Long clientId) {
-        return clienteRepository.findId(clientId) ;
+        Optional<Cliente> optCliente = clienteRepository.findById(clientId);
+        Cliente cliente = optCliente.isPresent() ? optCliente.get(): new ClienteNull();
+        return cliente;
     }
 }

@@ -3,13 +3,12 @@ package br.com.tt.petshop.controller;
 import br.com.tt.petshop.exeption.ClienteExeption;
 import br.com.tt.petshop.model.Cliente;
 import br.com.tt.petshop.service.ClienteService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -39,14 +38,17 @@ public class ClienteController {
     }
 
     @PostMapping("/cliente-form")
-    public RedirectView clienteForm(Cliente novoCliente, Model model){
+    public ModelAndView clienteForm(Cliente novoCliente, ModelAndView mv){
+        mv = new ModelAndView("cliente-form");
         try{
             clienteService.adicionar(novoCliente);
+            return new ModelAndView(String.format("redirect:/"));
         }catch (ClienteExeption e){
-            model.addAttribute("erro", e.getMessage());
+            mv.addObject("erro", e.getMessage());
+            return mv;
         }
 
-        return new RedirectView("/");
+
     }
 
     @GetMapping("/cliente-excluir")

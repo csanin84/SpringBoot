@@ -1,14 +1,32 @@
 package br.com.tt.petshop.model;
 
+import javax.persistence.*;
 import java.util.Objects;
-
+@Entity
+@Table(name = "TB_CLIENTE")
 public class Cliente {
-   private Long id = new Long(0);
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Long id;
+
+    @Column(name = "NOME_CLIENTE", length = 20)
     private String nome;
+
+    @Column(name = "CPF_CLIENTE", length = 14)
     private String cpf;
+
+    @Column(name = "INADIMPLENTE")
     private Boolean inadimplente = false;
 
     public Cliente(){}
+
+    public Cliente(String nome, String cpf, Boolean inadimplente) {
+
+        this.nome = nome;
+        this.cpf = cpf;
+        this.inadimplente = inadimplente;
+    }
 
     public static Cliente newClienteNome(String nome){
         Cliente cliente = new Cliente();
@@ -23,9 +41,8 @@ public class Cliente {
         return  cliente;
     }
 
-    public static Cliente newIdClienteNomeCpfInadimplente(Long id, String nome, String cpf, Boolean inadimplente){
+    public static Cliente newIdClienteNomeCpfInadimplente(String nome, String cpf, Boolean inadimplente){
         Cliente cliente = new Cliente();
-        cliente.setId(id);
         cliente.setNome(nome);
         cliente.setCpf(cpf);
         cliente.setInadimplente(inadimplente);

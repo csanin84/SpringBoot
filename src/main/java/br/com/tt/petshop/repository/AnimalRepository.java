@@ -3,6 +3,8 @@ package br.com.tt.petshop.repository;
 import br.com.tt.petshop.enums.EspecieEnum;
 import br.com.tt.petshop.exeption.AnimalExeption;
 import br.com.tt.petshop.model.Animal;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -11,9 +13,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-public class AnimalRepository {
-    List<Animal> animais = new ArrayList<>(Arrays.asList(
+//@Service
+@Repository
+public interface AnimalRepository extends JpaRepository<Animal, Long> {
+    List<Animal> findByClientId(Long clientId);
+
+
+    /*List<Animal> animais = new ArrayList<>(Arrays.asList(
             new Animal("Rex", LocalDate.now(), EspecieEnum.MAMIFERO, 1l),
             new Animal("Nemo", LocalDate.now(), EspecieEnum.PEIXE, 1L),
             new Animal("Fido", LocalDate.now(), EspecieEnum.MAMIFERO, 2L),
@@ -42,7 +48,7 @@ public class AnimalRepository {
 
     public void delete(Animal animal) {
         animais.remove(animal);
-    }
+    }*/
 
 
 }

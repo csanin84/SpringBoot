@@ -49,9 +49,9 @@ public class ClienteServiceTest {
     public void deveriaRetornarListaComClientes(){
         // Arange - Setup
         List<Cliente> listaCliente = new ArrayList<>( Arrays.asList(
-                Cliente.newIdClienteNomeCpfInadimplente(1L,"carlos","654.564.153.-15", false),
-                Cliente.newIdClienteNomeCpfInadimplente(2L,"raul","452.445.454.-45", false ),
-                Cliente.newIdClienteNomeCpfInadimplente(3L,"mario","546.778.567-57",true)));
+                Cliente.newIdClienteNomeCpfInadimplente("carlos","654.564.153.-15", false),
+                Cliente.newIdClienteNomeCpfInadimplente("raul","452.445.454.-45", false ),
+                Cliente.newIdClienteNomeCpfInadimplente("mario","546.778.567-57",true)));
 
         Mockito.when(clienteRepository.findAll()).thenReturn(listaCliente);
 
@@ -69,7 +69,7 @@ public class ClienteServiceTest {
         clienteService.remover(12L);
 
         // Assert
-        Cliente clienteDeletado = Cliente.newIdClienteNomeCpfInadimplente(12L,"","",false);
+        Cliente clienteDeletado = Cliente.newIdClienteNomeCpfInadimplente("","",false);
         verify(clienteRepository).delete(clienteDeletado);
         verifyNoMoreInteractions(clienteRepository);
 
@@ -89,7 +89,7 @@ public class ClienteServiceTest {
     @Test
     public void deveriaLacarClienteExeptionNullNomeNull(){
         try{
-            Cliente cliente = Cliente.newIdClienteNomeCpfInadimplente(1L,null,
+            Cliente cliente = Cliente.newIdClienteNomeCpfInadimplente(null,
                     "000.111.222-38", false);
             clienteService.adicionar(cliente);
             fail("deveria ter lançado exceção");
@@ -101,7 +101,7 @@ public class ClienteServiceTest {
     @Test
     public void deveriaLacarClienteExeptionNullNomeDuasPartes(){
         try{
-            Cliente cliente = Cliente.newIdClienteNomeCpfInadimplente(1L,"Carlos",
+            Cliente cliente = Cliente.newIdClienteNomeCpfInadimplente("Carlos",
                     "000.111.222-38", false);
             clienteService.adicionar(cliente);
             fail("deveria ter lançado exceção");
@@ -113,7 +113,7 @@ public class ClienteServiceTest {
     @Test
     public void deveriaLacarClienteExeptionNullNomeDoisCaracteres(){
         try{
-            Cliente cliente = Cliente.newIdClienteNomeCpfInadimplente(1L,"C Sanin",
+            Cliente cliente = Cliente.newIdClienteNomeCpfInadimplente("C Sanin",
                     "000.111.222-38", false);
             clienteService.adicionar(cliente);
             fail("deveria ter lançado exceção");
@@ -125,7 +125,7 @@ public class ClienteServiceTest {
     @Test
     public void deveriaLacarClienteExeptionNullCpfOnceNumeros(){
         try{
-            Cliente cliente = Cliente.newIdClienteNomeCpfInadimplente(1L,"Carlos Sanin",
+            Cliente cliente = Cliente.newIdClienteNomeCpfInadimplente("Carlos Sanin",
                     "00011122238789", false);
             clienteService.adicionar(cliente);
             fail("deveria ter lançado exceção");
@@ -138,10 +138,10 @@ public class ClienteServiceTest {
     public void deveriaLacarClienteExeptionIsInadimplente(){
         try{
             Long clienteId = 1L;
-            Cliente cliente = Cliente.newIdClienteNomeCpfInadimplente(1L,"Carlos Sanin",
+            Cliente cliente = Cliente.newIdClienteNomeCpfInadimplente("Carlos Sanin",
                     "000.111.222-38", true);
 
-            Mockito.when(clienteRepository.findId(clienteId)).thenReturn(cliente);
+            Mockito.when(clienteRepository.getOne(clienteId)).thenReturn(cliente);
 
             clienteService.validarClienteInadimplente(clienteId);
 
@@ -154,10 +154,10 @@ public class ClienteServiceTest {
     @Test
     public void deveriaLacarClienteExeptionIsAdimplente(){
             Long clienteId = 1L;
-            Cliente cliente = Cliente.newIdClienteNomeCpfInadimplente(1L,"Carlos Sanin",
+            Cliente cliente = Cliente.newIdClienteNomeCpfInadimplente("Carlos Sanin",
                     "000.111.222-38", false);
 
-            Mockito.when(clienteRepository.findId(clienteId)).thenReturn(cliente);
+            Mockito.when(clienteRepository.getOne(clienteId)).thenReturn(cliente);
 
             clienteService.validarClienteInadimplente(clienteId);
 
@@ -166,7 +166,7 @@ public class ClienteServiceTest {
 
     @Test
     public void deveriaAdicionarCliente(){
-            Cliente novoCliente = Cliente.newIdClienteNomeCpfInadimplente(1L,"Carlos Sanin",
+            Cliente novoCliente = Cliente.newIdClienteNomeCpfInadimplente("Carlos Sanin",
                     "000.111.222-38", false);
             clienteService.adicionar(novoCliente);
             verify(clienteRepository).save(novoCliente);
@@ -178,10 +178,10 @@ public class ClienteServiceTest {
     @Test
     public void deveriaEncontrarClientePeloId(){
         Long clienteId = 1L;
-        Cliente cliente = Cliente.newIdClienteNomeCpfInadimplente(clienteId,"Carlos Sanin",
+        Cliente cliente = Cliente.newIdClienteNomeCpfInadimplente("Carlos Sanin",
                 "000.111.222-38", false);
 
-        Mockito.when(clienteRepository.findId(clienteId)).thenReturn(cliente);
+        Mockito.when(clienteRepository.getOne(clienteId)).thenReturn(cliente);
 
         assertEquals("Cliente não fue achado", cliente, clienteService.findId(clienteId));
     }
@@ -190,7 +190,7 @@ public class ClienteServiceTest {
     public void deveriaNaoEncontrarClientePeloId(){
         Long clienteId = 1L;
 
-        Mockito.when(clienteRepository.findId(clienteId)).thenReturn(null);
+        Mockito.when(clienteRepository.getOne(clienteId)).thenReturn(null);
 
         Cliente clienteAchado = clienteService.findId(clienteId);
 

@@ -46,18 +46,18 @@ public class AnimalServiceTest {
     @Test
     public void deveriaRetornarListaComAnimales(){
         List<Animal> animais_1 = new ArrayList<>(Arrays.asList(
-                new Animal("Rex", LocalDate.now(), EspecieEnum.MAMIFERO, 1l),
-                new Animal("Nemo", LocalDate.now(), EspecieEnum.PEIXE, 1L)
+                new Animal( "Rex", LocalDate.now(), EspecieEnum.MAMIFERO, 1l),
+                new Animal( "Nemo", LocalDate.now(), EspecieEnum.PEIXE, 1L)
 
         ));
 
         List<Animal> animais_2 = new ArrayList<>(Arrays.asList(
-                new Animal("Fido", LocalDate.now(), EspecieEnum.MAMIFERO, 1L)
+                new Animal("Fido", LocalDate.now(), EspecieEnum.MAMIFERO, 2L)
         ));
 
         // Mockito.when(clienteRepository.findAll()).thenReturn(listaCliente);
-        Mockito.when(animalRepository.listar(1L)).thenReturn(animais_1);
-        Mockito.when(animalRepository.listar(2L)).thenReturn(animais_2);
+        Mockito.when(animalRepository.findByClientId(1L)).thenReturn(animais_1);
+        Mockito.when(animalRepository.findByClientId(2L)).thenReturn(animais_2);
 
         animalService.listar(1L);
         assertEquals("A lista debe conter elementos", 2, animais_1.size());

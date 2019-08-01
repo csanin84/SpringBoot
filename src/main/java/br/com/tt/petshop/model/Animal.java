@@ -3,21 +3,31 @@ package br.com.tt.petshop.model;
 import br.com.tt.petshop.enums.EspecieEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name = "TB_ANIMAL")
 public class Animal {
-    private static Long contador = new Long(0);
-    private Long id = new Long(0);
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name = "codigo", insertable = false)
+    private Long id;
+
     private String nome;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dataNascimento;
+
+    @Enumerated(EnumType.STRING)
     private EspecieEnum especie;
+
     private Long clientId;
 
-    public Animal(String nome, LocalDate dataNascimento, EspecieEnum especie, Long clienteId) {
-        contador++;
-        this.id = contador;
+    public Animal( String nome, LocalDate dataNascimento, EspecieEnum especie, Long clienteId) {
+        //this.id = id;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.especie = especie;
@@ -25,8 +35,6 @@ public class Animal {
     }
 
     public Animal() {
-        contador++;
-        setId(contador);
     }
 
     public Long getId() {
