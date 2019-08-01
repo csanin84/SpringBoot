@@ -38,14 +38,13 @@ public class ClienteController {
     }
 
     @PostMapping("/cliente-form")
-    public ModelAndView clienteForm(Cliente novoCliente, ModelAndView mv){
-        mv = new ModelAndView("cliente-form");
+    public String clienteForm(Cliente novoCliente, Model mv){
         try{
             clienteService.adicionar(novoCliente);
-            return new ModelAndView(String.format("redirect:/"));
+            return "redirect:/";
         }catch (ClienteExeption e){
-            mv.addObject("erro", e.getMessage());
-            return mv;
+            mv.addAttribute("erro", e.getMessage());
+            return paginaAdicionar(mv);
         }
 
 
