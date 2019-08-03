@@ -3,6 +3,7 @@ package br.com.tt.petshop.service;
 import br.com.tt.petshop.exeption.AnimalExeption;
 import br.com.tt.petshop.exeption.ClienteExeption;
 import br.com.tt.petshop.model.Cliente;
+import br.com.tt.petshop.model.ClienteNull;
 import br.com.tt.petshop.repository.ClienteRepository;
 import org.junit.Assert.*;
 import org.junit.Before;
@@ -18,8 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ClienteServiceTest {
@@ -66,10 +66,13 @@ public class ClienteServiceTest {
     @Test
     public void deveriaRemoverComSucesso(){
         // Arange - Setup
-        clienteService.remover(12L);
+        Cliente clienteDeletado = Cliente.newIdClienteNomeCpfInadimplente("","",false);
+        clienteDeletado.setId(1L);
+
+        //Act
+        clienteService.remover(1L);
 
         // Assert
-        Cliente clienteDeletado = Cliente.newIdClienteNomeCpfInadimplente("","",false);
         verify(clienteRepository).delete(clienteDeletado);
         verifyNoMoreInteractions(clienteRepository);
 
@@ -140,6 +143,7 @@ public class ClienteServiceTest {
             Long clienteId = 1L;
             Cliente cliente = Cliente.newIdClienteNomeCpfInadimplente("Carlos Sanin",
                     "000.111.222-38", true);
+            cliente.setId(1L);
 
             Mockito.when(clienteRepository.getOne(clienteId)).thenReturn(cliente);
 
@@ -161,7 +165,8 @@ public class ClienteServiceTest {
 
             clienteService.validarClienteInadimplente(clienteId);
 
-           assertTrue(clienteService.validarClienteInadimplente(clienteId));
+           assertEquals("Es inadimplente", false,
+                   clienteService.validarClienteInadimplente(clienteId));
     }
 
     @Test
@@ -190,11 +195,11 @@ public class ClienteServiceTest {
     public void deveriaNaoEncontrarClientePeloId(){
         Long clienteId = 1L;
 
-        Mockito.when(clienteRepository.getOne(clienteId)).thenReturn(null);
+        Mockito.when(clienteRepository.getOne(clienteId)).thenReturn(new ClienteNull());
 
         Cliente clienteAchado = clienteService.findId(clienteId);
 
-        assertEquals("Cliente não fue achado", null, clienteAchado);
+        assertEquals("Cliente não fue achado", new ClienteNull(), clienteAchado);
     }
 }
 

@@ -3,6 +3,7 @@ package br.com.tt.petshop.service;
 import br.com.tt.petshop.enums.EspecieEnum;
 import br.com.tt.petshop.exeption.AnimalExeption;
 import br.com.tt.petshop.model.Animal;
+import br.com.tt.petshop.model.Cliente;
 import br.com.tt.petshop.repository.AnimalRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,18 +47,18 @@ public class AnimalServiceTest {
     @Test
     public void deveriaRetornarListaComAnimales(){
         List<Animal> animais_1 = new ArrayList<>(Arrays.asList(
-                new Animal( "Rex", LocalDate.now(), EspecieEnum.MAMIFERO, 1l),
-                new Animal( "Nemo", LocalDate.now(), EspecieEnum.PEIXE, 1L)
+                new Animal( "Rex", LocalDate.now(), EspecieEnum.MAMIFERO, Cliente.newClienteById(1l)),
+                new Animal( "Nemo", LocalDate.now(), EspecieEnum.PEIXE, Cliente.newClienteById(1l))
 
         ));
 
         List<Animal> animais_2 = new ArrayList<>(Arrays.asList(
-                new Animal("Fido", LocalDate.now(), EspecieEnum.MAMIFERO, 2L)
+                new Animal("Fido", LocalDate.now(), EspecieEnum.MAMIFERO, Cliente.newClienteById(2l))
         ));
 
         // Mockito.when(clienteRepository.findAll()).thenReturn(listaCliente);
-        Mockito.when(animalRepository.findByClientId(1L)).thenReturn(animais_1);
-        Mockito.when(animalRepository.findByClientId(2L)).thenReturn(animais_2);
+        Mockito.when(animalRepository.findByCliente(1L)).thenReturn(animais_1);
+        Mockito.when(animalRepository.findByCliente(2L)).thenReturn(animais_2);
 
         animalService.listar(1L);
         assertEquals("A lista debe conter elementos", 2, animais_1.size());
@@ -78,7 +79,7 @@ public class AnimalServiceTest {
         try{
             Animal animal = new Animal("Kaiser",
                     null,
-                    EspecieEnum.MAMIFERO,1L);
+                    EspecieEnum.MAMIFERO,Cliente.newClienteById(1l));
 
             animalService.adicionar(animal);
             fail("devia lançar exepção");
@@ -92,7 +93,7 @@ public class AnimalServiceTest {
         try{
             Animal animal = new Animal("Kaiser",
                     LocalDate.of(2020, Month.JUNE, 15),
-                    EspecieEnum.MAMIFERO,1L);
+                    EspecieEnum.MAMIFERO,Cliente.newClienteById(1l));
 
             animalService.adicionar(animal);
             fail("devia lançar exepção");
@@ -106,7 +107,7 @@ public class AnimalServiceTest {
         try{
             Animal animal = new Animal("Ka",
                     LocalDate.of(2018, Month.JUNE, 15),
-                    EspecieEnum.MAMIFERO,1L);
+                    EspecieEnum.MAMIFERO,Cliente.newClienteById(1l));
 
             animalService.adicionar(animal);
             fail("devia lançar exepção");
@@ -121,7 +122,7 @@ public class AnimalServiceTest {
 
         Animal animal = new Animal("Kaiser",
                 LocalDate.of(2018, Month.JUNE, 15),
-                EspecieEnum.MAMIFERO,1L);
+                EspecieEnum.MAMIFERO,Cliente.newClienteById(1l));
 
         when(clienteService.validarClienteInadimplente(1L)).thenThrow(AnimalExeption.class);
         animalService.adicionar(animal);
@@ -129,7 +130,7 @@ public class AnimalServiceTest {
 
     @Test
     public void deveriaAdicionarAnimal(){
-        Animal animal =  new Animal("Rex", LocalDate.now(), EspecieEnum.MAMIFERO, 1l);
+        Animal animal =  new Animal("Rex", LocalDate.now(), EspecieEnum.MAMIFERO, Cliente.newClienteById(1l));
         animalService.adicionar(animal);
         verify(animalRepository).save(animal);
         verifyNoMoreInteractions(animalRepository);
@@ -137,7 +138,8 @@ public class AnimalServiceTest {
 
     @Test
     public void deveriaRemoverComSucesso(){
-        Animal animal =  new Animal("", null, null, 1l);
+        Animal animal =  new Animal("", null, null, Cliente.newClienteById(1l));
+        animal.setId(1L);
         animalService.remover(1L);
 
         verify(animalRepository).delete(animal);

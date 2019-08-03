@@ -2,6 +2,7 @@ package br.com.tt.petshop.controller;
 
 import br.com.tt.petshop.exeption.AnimalExeption;
 import br.com.tt.petshop.model.Animal;
+import br.com.tt.petshop.model.Cliente;
 import br.com.tt.petshop.service.AnimalService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,26 +25,27 @@ public class AnimalController {
     }
 
     @GetMapping("/animais-listar")
-    public ModelAndView listar(@RequestParam Long clientId){
+    public ModelAndView listar(@RequestParam Long cliente){
         ModelAndView mv = new ModelAndView("animais-listar");
 
-        addAttributesToModel(clientId, mv);
+        addAttributesToModel(cliente, mv);
 
         return mv ;
     }
 
-    private void addAttributesToModel(Long clientId, ModelAndView mv) {
+    private void addAttributesToModel(Long cliente, ModelAndView mv) {
         List<Animal> animais = null;
         try {
-             animais = animalService.listar(clientId);
+             animais = animalService.listar(cliente);
 
         }catch(AnimalExeption e){
             animais = new ArrayList<>();
         }finally {
             mv.addObject("animais", animais);
-            mv.addObject("clientId", clientId);
+            mv.addObject("clientId", cliente);
             Animal animal = new Animal();
-            animal.setClientId(clientId);
+            animal.setCliente(new Cliente());
+            animal.getCliente().setId(cliente);
             mv.addObject("animal", animal);
             List<String> especies = animalService.listarEspecies();
             mv.addObject("especies", especies);
@@ -55,10 +57,10 @@ public class AnimalController {
         System.out.println(animal.toString());
         try {
             animalService.adicionar(animal);
-            return new ModelAndView(String.format("redirect:/animais-listar?clientId=%d",animal.getClientId()));
+            return new ModelAndView(String.format("redirect:/animais-listar?cliente=%d", animal.getCliente().getId()));
         }catch (AnimalExeption e){
             mv.addObject("erro", e.getMessage());
-            addAttributesToModel(animal.getClientId(), mv);
+            addAttributesToModel(animal.getCliente().getId(), mv);
 
             return mv;
         }

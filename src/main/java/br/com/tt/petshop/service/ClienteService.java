@@ -32,10 +32,26 @@ public class ClienteService {
             throw new ClienteExeption("cliente nulo");
 
         validarNome(novoCliente.getNome());
-        validarCpf(novoCliente.getCpf());
+        validarCpf(novoCliente.getCpf().getValor());
 
         clienteRepository.save(novoCliente);
     }
+
+
+    public void remover(Long id){
+        //TODO alterar no JPA
+        Cliente cliente = new Cliente();
+        cliente.setId(id);
+        clienteRepository.delete(cliente);
+    }
+
+
+    /*-----------------------------------------------------------------------*/
+    public Cliente findId(Long clientId) {
+        Cliente clienteBuscado = clienteRepository.getOne(clientId);
+        return clienteBuscado == null ? new ClienteNull() : clienteBuscado;
+    }
+
     private boolean validarNome(String nome) throws ClienteExeption{
         if(Objects.isNull(nome))
             throw new ClienteExeption("Nombre nulo");
@@ -60,22 +76,9 @@ public class ClienteService {
     }
 
     public boolean validarClienteInadimplente(Long clientId){
-        Optional<Cliente> optCliente = clienteRepository.findById(clientId);
-        if (optCliente.isPresent() && optCliente.get().getInadimplente())
+        Cliente cliente = clienteRepository.getOne(clientId);
+        if (cliente != null && cliente.getInadimplente())
             throw new AnimalExeption("Cliente inadimplente");
-        return true;
-    }
-
-    public void remover(Long id){
-        //TODO alterar no JPA
-        Cliente cliente = new Cliente();
-        cliente.setId(id);
-        clienteRepository.delete(cliente);
-    }
-
-    public Cliente findId(Long clientId) {
-        Optional<Cliente> optCliente = clienteRepository.findById(clientId);
-        Cliente cliente = optCliente.isPresent() ? optCliente.get(): new ClienteNull();
-        return cliente;
+        return false;
     }
 }

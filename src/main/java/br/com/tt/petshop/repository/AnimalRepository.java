@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 //@Service
 @Repository
 public interface AnimalRepository extends JpaRepository<Animal, Long> {
-    List<Animal> findByClientId(Long clientId);
+    List<Animal> findByCliente(Long cliente);
 
 
     /*List<Animal> animais = new ArrayList<>(Arrays.asList(

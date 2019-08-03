@@ -21,16 +21,16 @@ public class AnimalService {
         this.clienteService = clienteService;
     }
 
-    public List<Animal> listar(Long clientId){
-        return animalRepository.findByClientId(clientId);
+    public List<Animal> listar(Long cliente){
+        return animalRepository.findByCliente(cliente);
     }
 
     public void adicionar(Animal animal){
-        if(Objects.isNull(animal.getNome())|| Objects.isNull(animal.getClientId()))
+        if(Objects.isNull(animal.getNome())|| Objects.isNull(animal.getCliente().getId()))
             throw new AnimalExeption("Animal sem nome ou sem dono ");
-        validarDataMajorHoje(animal.getDataNascimento());
+        validarDataMajorHoje(animal.getDataNascimento().getData());
         validarNomeAnimalTresLetras(animal.getNome());
-        clienteService.validarClienteInadimplente(animal.getClientId());
+        clienteService.validarClienteInadimplente(animal.getCliente().getId());
         animalRepository.save(animal);
     }
 

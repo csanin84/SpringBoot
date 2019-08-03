@@ -1,5 +1,15 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
+        <style>
+            table, th, td {
+              border: 1px solid black;
+              border-collapse: collapse;
+            }
+            th, td {
+              padding: 5px;
+              text-align: left;
+            }
+        </style>
         <title>Exemplo</title>
     </head>
     <body>
@@ -13,28 +23,31 @@
                 <th>Cliente</th>
                 <th>CPF</th>
                 <th>Inadimplente</th>
-                <th></th>
+                <th>Excluir</th>
             </tr>
             </thead>
 
             <tbody>
-            <tr th:each = "c: ${clientes}" >
-                <td>
-                    <a th:href="@{/animais-listar(clientId=${c.id})}"><span th:text="${c.nome}"> </span></a>
-                </td>
-                <td>
-                    <span th:text="${c.cpf}"> </span>
-                </td>
-                <td>
-                    <span th:text="${c.inadimplente}"> </span>
-                </td>
-                <td>
-                    <a th:href="@{/cliente-excluir(id=${c.id})}"> X </a>
-                </td>
-            </tr>
+                <tr th:each = "c: ${clientes}" >
+
+                    <td>
+                        <a th:href="@{/animais-listar(clientId=${c.id})}"><span th:text="${c.nome}"> </span></a>
+                    </td>
+                    <td>
+                        <span th:text="${c.cpf.valor}"> </span>
+                    </td>
+                    <td>
+                        <span th:text="${c.inadimplente}"> </span>
+                    </td>
+                    <td>
+                        <a th:href="@{/cliente-excluir(id=${c.id})}"> X </a>
+                    </td>
+
+                </tr>
             </tbody>
 
         </table>
+
         <a href="/cliente-adicionar">Adicionar</a>
 
 

@@ -1,5 +1,15 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
+        <style>
+            table, th, td {
+              border: 1px solid black;
+              border-collapse: collapse;
+            }
+            th, td {
+              padding: 5px;
+              text-align: left;
+            }
+        </style>
         <title>Exemplo</title>
     </head>
     <body>
@@ -13,26 +23,42 @@
         <form method="POST"
               th:object="${animal}"
               th:action="@{/animais-listar}" >
-            Nome:              <input type="text" th:field="*{nome}"/><br>
-            Data do Nascimento: <input type="date"  th:field="*{dataNascimento}"/><br>
-            Especie:
-            <select th:field="*{especie}" >
-                <option th:each="especie : ${especies}" th:value="${especie}" th:text="${especie}"></option>
-            </select>
-            <input type="hidden" th:field="*{clientId}"/><br>
+            <pre>Nome:              <input type="text" th:field="*{nome}"/></pre>
+            <pre>Data do Nascimento:<input type="date"  th:field="*{dataNascimento.data}"/></pre>
+            <pre>Especie:           <select th:field="*{especie}" >
+                                           <option th:each="especie : ${especies}" th:value="${especie}" th:text="${especie}"></option>
+                                    </select>
+            </pre>
+            <input type="hidden" th:field="*{cliente.id}"/><br>
             <br>
             <button type="submit">Adicionar</button>
         </form>
         <br>
 
+        <table>
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Data Nascimento</th>
+                <th>Excluir</th>
+            </tr>
+            </thead>
 
+            <tbody>
+                <tr th:each = "a: ${animais}" >
+                    <td>
+                        <span th:text="${a.nome}"> </span>
+                    </td>
+                    <td>
+                        <span th:text="${a.dataNascimento.data}"> </span>
+                    </td>
+                    <td>
+                        <a th:href="@{/animal-excluir(id=${a.id})}">X</a>
+                    </td>
+                </tr>
+            </tbody>
 
-        <ul th:each = "a: ${animais}">
-            <li>
-                <span th:text="${a.nome}"> </span>
-                <a th:href="@{/animal-excluir(id=${a.id})}">X</a>
-            </li>
-        </ul>
+        </table>
 
 
     </body>

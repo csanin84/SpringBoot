@@ -1,7 +1,8 @@
 package br.com.tt.petshop.model;
 
 import br.com.tt.petshop.enums.EspecieEnum;
-import org.springframework.format.annotation.DateTimeFormat;
+import br.com.tt.petshop.model.vo.DataNascimento;
+
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,26 +16,31 @@ public class Animal {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "codigo", insertable = false)
     private Long id;
-
     private String nome;
-
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate dataNascimento;
+    @Embedded
+    private DataNascimento dataNascimento;
 
     @Enumerated(EnumType.STRING)
     private EspecieEnum especie;
 
-    private Long clientId;
+    //só lectura
+    //@Column(name = "CLIENT_ID", updatable = false, insertable = false)
+    //private Long clientId;
 
-    public Animal( String nome, LocalDate dataNascimento, EspecieEnum especie, Long clienteId) {
+    @ManyToOne
+    @JoinColumn(name="CLIENT_ID")
+    private Cliente cliente;
+
+    public Animal( String nome, LocalDate dataNascimento, EspecieEnum especie, Cliente cliente) {
         //this.id = id;
         this.nome = nome;
-        this.dataNascimento = dataNascimento;
+        this.dataNascimento = new DataNascimento(dataNascimento);
         this.especie = especie;
-        this.clientId = clienteId;
+        this.cliente = new Cliente();
     }
 
     public Animal() {
+        this.dataNascimento = new DataNascimento();
     }
 
     public Long getId() {
@@ -53,11 +59,11 @@ public class Animal {
         this.nome = nome;
     }
 
-    public LocalDate getDataNascimento() {
+    public DataNascimento getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(LocalDate dataNascimento) {
+    public void setDataNascimento(DataNascimento dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
@@ -69,12 +75,12 @@ public class Animal {
         this.especie = especie;
     }
 
-    public Long getClientId() {
-        return clientId;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     @Override
@@ -83,7 +89,7 @@ public class Animal {
                 "nome='" + nome + '\'' +
                 ", dataNascimento=" + dataNascimento +
                 ", especie=" + especie +
-                ", clientId=" + clientId +
+                ", cliente=" + cliente.toString()+
                 '}';
     }
 
