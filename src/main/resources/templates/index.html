@@ -31,7 +31,7 @@
                 <tr th:each = "c: ${clientes}" >
 
                     <td>
-                        <a th:href="@{/animais-listar(clientId=${c.id})}"><span th:text="${c.nome}"> </span></a>
+                        <a th:href="@{/animais-listar(cliente=${c.id})}"><span th:text="${c.nome}"> </span></a>
                     </td>
                     <td>
                         <span th:text="${c.cpf.valor}"> </span>

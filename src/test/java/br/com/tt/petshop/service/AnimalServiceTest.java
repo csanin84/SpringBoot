@@ -13,7 +13,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,8 +56,8 @@ public class AnimalServiceTest {
         ));
 
         // Mockito.when(clienteRepository.findAll()).thenReturn(listaCliente);
-        Mockito.when(animalRepository.findByCliente(1L)).thenReturn(animais_1);
-        Mockito.when(animalRepository.findByCliente(2L)).thenReturn(animais_2);
+        Mockito.when(animalRepository.findByClienteId(1L)).thenReturn(animais_1);
+        Mockito.when(animalRepository.findByClienteId(2L)).thenReturn(animais_2);
 
         animalService.listar(1L);
         assertEquals("A lista debe conter elementos", 2, animais_1.size());

@@ -22,7 +22,7 @@ public class AnimalService {
     }
 
     public List<Animal> listar(Long cliente){
-        return animalRepository.findByCliente(cliente);
+        return animalRepository.findByClienteId(cliente);
     }
 
     public void adicionar(Animal animal){
