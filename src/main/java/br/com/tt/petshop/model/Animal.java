@@ -6,6 +6,8 @@ import br.com.tt.petshop.model.vo.DataNascimento;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,7 +16,7 @@ public class Animal {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "codigo", insertable = false)
+    @Column(name = "id", insertable = false)
     private Long id;
     private String nome;
     @Embedded
@@ -31,16 +33,23 @@ public class Animal {
     @JoinColumn(name="CLIENT_ID")
     private Cliente cliente;
 
-    public Animal( String nome, LocalDate dataNascimento, EspecieEnum especie, Cliente cliente) {
-        //this.id = id;
+    @ManyToOne
+    @JoinColumn(name="ID_UNIDADE")
+    private Unidade unidade;
+
+    @OneToMany(mappedBy = "animal", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    List<Produto> produtos = new ArrayList<>();
+
+    public Animal() {
+    }
+
+
+    public Animal(Long id, String nome,LocalDate dataNascimento, EspecieEnum especie, Cliente cliente) {
+        this.id = id;
         this.nome = nome;
         this.dataNascimento = new DataNascimento(dataNascimento);
         this.especie = especie;
-        this.cliente = new Cliente();
-    }
-
-    public Animal() {
-        this.dataNascimento = new DataNascimento();
+        this.cliente = cliente;
     }
 
     public Long getId() {
@@ -81,6 +90,22 @@ public class Animal {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Unidade getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(Unidade unidade) {
+        this.unidade = unidade;
+    }
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 
     @Override

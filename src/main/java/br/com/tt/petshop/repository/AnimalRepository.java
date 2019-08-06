@@ -3,7 +3,10 @@ package br.com.tt.petshop.repository;
 import br.com.tt.petshop.enums.EspecieEnum;
 import br.com.tt.petshop.exeption.AnimalExeption;
 import br.com.tt.petshop.model.Animal;
+import br.com.tt.petshop.model.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,12 @@ import java.util.stream.Collectors;
 @Repository
 public interface AnimalRepository extends JpaRepository<Animal, Long> {
     List<Animal> findByClienteId(Long cliente);
+
+    List<Animal> findByNome(String nome);
+
+
+
+
 
 
     /*List<Animal> animais = new ArrayList<>(Arrays.asList(

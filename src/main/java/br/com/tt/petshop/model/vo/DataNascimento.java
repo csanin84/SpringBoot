@@ -2,6 +2,7 @@ package br.com.tt.petshop.model.vo;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -10,6 +11,7 @@ import java.util.Objects;
 public class DataNascimento {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Column(name = "data_nascimento")
     private LocalDate data;
 
     public DataNascimento() {  }

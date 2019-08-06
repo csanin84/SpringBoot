@@ -1,0 +1,9 @@
+INSERT INTO TB_UNIDADE(ID, NOME, ENDERECO) VALUES
+(1,'Unidade Cristovão Colombo', 'Rua Cristovão Colombo, 100');
+
+INSERT INTO TB_CLIENTE (ID, NOME_CLIENTE, CPF_CLIENTE, INADIMPLENTE, ID_UNIDADE) VALUES
+(133, 'Ciclano Santos', '111.222.333-44', TRUE, 1);
+
+
+INSERT INTO TB_ANIMAL (client_id, data_nascimento, especie, nome, ID_UNIDADE)
+VALUES (133, '2019-01-02', 'MAMIFERO', 'rex', 1);

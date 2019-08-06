@@ -46,13 +46,13 @@ public class AnimalServiceTest {
     @Test
     public void deveriaRetornarListaComAnimales(){
         List<Animal> animais_1 = new ArrayList<>(Arrays.asList(
-                new Animal( "Rex", LocalDate.now(), EspecieEnum.MAMIFERO, Cliente.newClienteById(1l)),
-                new Animal( "Nemo", LocalDate.now(), EspecieEnum.PEIXE, Cliente.newClienteById(1l))
+                new Animal(1L, "Rex", LocalDate.now(), EspecieEnum.MAMIFERO, Cliente.newClienteById(1l)),
+                new Animal( 2L,"Nemo", LocalDate.now(), EspecieEnum.PEIXE, Cliente.newClienteById(1l))
 
         ));
 
         List<Animal> animais_2 = new ArrayList<>(Arrays.asList(
-                new Animal("Fido", LocalDate.now(), EspecieEnum.MAMIFERO, Cliente.newClienteById(2l))
+                new Animal(1L,"Fido", LocalDate.now(), EspecieEnum.MAMIFERO, Cliente.newClienteById(2l))
         ));
 
         // Mockito.when(clienteRepository.findAll()).thenReturn(listaCliente);
@@ -68,7 +68,7 @@ public class AnimalServiceTest {
 
     @Test(expected = AnimalExeption.class)
     public void deveriaLancarAnimalExeptionSemNomeSemDono(){
-        Animal animal = new Animal(null, LocalDate.now(), EspecieEnum.MAMIFERO,null);
+        Animal animal = new Animal(1L, null, LocalDate.now(), EspecieEnum.MAMIFERO,null);
 //        doThrow(AnimalExeption.class).when(animalRepository).save(animal);
         animalService.adicionar(animal);
     }// fin deveriaLancarAnimalExeptionSemNomeSemDono
@@ -76,7 +76,7 @@ public class AnimalServiceTest {
     @Test
     public void deveriaLacarAnimalExptionDataNull(){
         try{
-            Animal animal = new Animal("Kaiser",
+            Animal animal = new Animal(1L,"Kaiser",
                     null,
                     EspecieEnum.MAMIFERO,Cliente.newClienteById(1l));
 
@@ -90,7 +90,7 @@ public class AnimalServiceTest {
     @Test
     public void deveriaLacarAnimalExptionDataMajorHoje(){
         try{
-            Animal animal = new Animal("Kaiser",
+            Animal animal = new Animal(1L, "Kaiser",
                     LocalDate.of(2020, Month.JUNE, 15),
                     EspecieEnum.MAMIFERO,Cliente.newClienteById(1l));
 
@@ -104,7 +104,7 @@ public class AnimalServiceTest {
     @Test
     public void deveriaLacarAnimalExeptionNomeMaisDeTresLetras(){
         try{
-            Animal animal = new Animal("Ka",
+            Animal animal = new Animal(1L,"Ka",
                     LocalDate.of(2018, Month.JUNE, 15),
                     EspecieEnum.MAMIFERO,Cliente.newClienteById(1l));
 
@@ -119,7 +119,7 @@ public class AnimalServiceTest {
     @Test(expected = AnimalExeption.class)
     public void deviaLacarAnimalExeptionClienteInadimplente(){
 
-        Animal animal = new Animal("Kaiser",
+        Animal animal = new Animal(1L,"Kaiser",
                 LocalDate.of(2018, Month.JUNE, 15),
                 EspecieEnum.MAMIFERO,Cliente.newClienteById(1l));
 
@@ -129,7 +129,7 @@ public class AnimalServiceTest {
 
     @Test
     public void deveriaAdicionarAnimal(){
-        Animal animal =  new Animal("Rex", LocalDate.now(), EspecieEnum.MAMIFERO, Cliente.newClienteById(1l));
+        Animal animal =  new Animal(1L,"Rex", LocalDate.now(), EspecieEnum.MAMIFERO, Cliente.newClienteById(1l));
         animalService.adicionar(animal);
         verify(animalRepository).save(animal);
         verifyNoMoreInteractions(animalRepository);
@@ -137,7 +137,7 @@ public class AnimalServiceTest {
 
     @Test
     public void deveriaRemoverComSucesso(){
-        Animal animal =  new Animal("", null, null, Cliente.newClienteById(1l));
+        Animal animal =  new Animal(1L, "", null, null, Cliente.newClienteById(1l));
         animal.setId(1L);
         animalService.remover(1L);
 

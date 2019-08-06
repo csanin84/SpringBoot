@@ -27,6 +27,11 @@ public class Cliente {
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     List<Animal> animais = new ArrayList<>();
 
+
+    @ManyToOne
+    @JoinColumn(name="ID_UNIDADE")
+    private Unidade unidade;
+
     public Cliente(){}
 
     public static  Cliente newClienteById(Long id){
@@ -102,6 +107,14 @@ public class Cliente {
 
     public void setAnimais(List<Animal> animais) {
         this.animais = animais;
+    }
+
+    public Unidade getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(Unidade unidade) {
+        this.unidade = unidade;
     }
 
     @Override
