@@ -23,9 +23,13 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
 
     List<Animal> findByNome(String nome);
 
+    /*@Query("select p from Produto p, Animal a where a.id = :id and p.animal.id = a.id")
+    List<Produto> findProdutosByIdAnimal(@Param("id") Long id);*/
 
+    @Query("SELECT p FROM Animal a  JOIN a.produtos p ON a.id =:id")
+    List<Produto> findProdutosByIdAnimal(@Param("id") Long id);
 
-
+    List<Animal> findByDataNascimentoDataBetweenAndEspecieIs(LocalDate inicio, LocalDate fim, EspecieEnum especie);
 
 
     /*List<Animal> animais = new ArrayList<>(Arrays.asList(
