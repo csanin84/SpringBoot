@@ -44,10 +44,16 @@ public class ClienteEndpoind {
 
     // /clientes/{id}
    @PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity update(@RequestBody Cliente cliente, @PathVariable Long id){
+   public ResponseEntity update(@RequestBody Cliente cliente, @PathVariable Long id){
         cliente.setId(id);
         clienteService.adicionar(cliente);
         return ResponseEntity.noContent().build();
    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable Long id){
+        clienteService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }

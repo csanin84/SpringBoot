@@ -80,4 +80,8 @@ public class ClienteService {
             throw new AnimalExeption("Cliente inadimplente");
         return false;
     }
+
+    public void deleteById(Long id) {
+        clienteRepository.deleteById(id);
+    }
 }
