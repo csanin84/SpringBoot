@@ -8,10 +8,10 @@ import br.com.tt.petshop.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ClienteService {
@@ -27,14 +27,14 @@ public class ClienteService {
     }
 
 
-    public void adicionar(Cliente novoCliente)  throws ClienteExeption{
+    public Cliente adicionar(Cliente novoCliente)  throws ClienteExeption{
         if(Objects.isNull(novoCliente))
             throw new ClienteExeption("cliente nulo");
 
         validarNome(novoCliente.getNome());
         validarCpf(novoCliente.getCpf().getValor());
 
-        clienteRepository.save(novoCliente);
+        return clienteRepository.save(novoCliente);
     }
 
 
@@ -47,9 +47,8 @@ public class ClienteService {
 
 
     /*-----------------------------------------------------------------------*/
-    public Cliente findId(Long clientId) {
-        Cliente clienteBuscado = clienteRepository.getOne(clientId);
-        return clienteBuscado == null ? new ClienteNull() : clienteBuscado;
+    public Optional<Cliente> findId(Long clientId) {
+        return clienteRepository.findById(clientId);
     }
 
     private boolean validarNome(String nome) throws ClienteExeption{

@@ -17,6 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -197,7 +198,7 @@ public class ClienteServiceTest {
 
         Mockito.when(clienteRepository.getOne(clienteId)).thenReturn(new ClienteNull());
 
-        Cliente clienteAchado = clienteService.findId(clienteId);
+        Optional<Cliente> clienteAchado = clienteService.findId(clienteId);
 
         assertEquals("Cliente não fue achado", new ClienteNull(), clienteAchado);
     }
