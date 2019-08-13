@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class AnimalService {
@@ -21,8 +22,15 @@ public class AnimalService {
         this.clienteService = clienteService;
     }
 
-    public List<Animal> listar(Long cliente){
-        return animalRepository.findByClienteId(cliente);
+    public List<Animal> listar(Optional<Long> clienteId, Optional<String>nome){
+        if(clienteId.isPresent() && nome.isPresent())
+            return animalRepository.findByClienteIdAndNome(clienteId.get(),nome.get());
+        else if(clienteId.isPresent())
+            return animalRepository.findByClienteId(clienteId.get());
+        else if(nome.isPresent())
+            return animalRepository.findByNome(nome.get());
+        return animalRepository.findAll();
+
     }
 
     public void adicionar(Animal animal){

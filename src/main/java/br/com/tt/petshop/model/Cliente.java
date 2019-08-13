@@ -118,6 +118,16 @@ public class Cliente {
     }
 
     @Override
+    public String toString() {
+        return "Cliente{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+               ", cpf=" + cpf.getValor() +
+                ", inadimplente=" + inadimplente +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
