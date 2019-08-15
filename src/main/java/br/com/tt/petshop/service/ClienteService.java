@@ -1,14 +1,15 @@
 package br.com.tt.petshop.service;
 
+import br.com.tt.petshop.client.CreditoApiClient;
+import br.com.tt.petshop.client.CreditoApiRTClient;
+import br.com.tt.petshop.client.CreditoDto;
 import br.com.tt.petshop.exeption.AnimalExeption;
 import br.com.tt.petshop.exeption.ClienteExeption;
 import br.com.tt.petshop.model.Cliente;
-import br.com.tt.petshop.model.ClienteNull;
 import br.com.tt.petshop.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -17,9 +18,11 @@ import java.util.Optional;
 public class ClienteService {
 
     private final ClienteRepository clienteRepository;
+    private final CreditoApiClient creditoApiClient;
 
-    public ClienteService(ClienteRepository clienteRepository) {
+    public ClienteService(ClienteRepository clienteRepository, CreditoApiClient creditoApiClient) {
         this.clienteRepository = clienteRepository;
+        this.creditoApiClient = creditoApiClient;
     }
 
     public List<Cliente> listar(){
@@ -27,14 +30,23 @@ public class ClienteService {
     }
 
 
-    public Cliente adicionar(Cliente novoCliente)  throws ClienteExeption{
-        if(Objects.isNull(novoCliente))
+    public Cliente adicionar(Cliente novoCliente)  throws ClienteExeption {
+        if (Objects.isNull(novoCliente))
             throw new ClienteExeption("cliente nulo");
 
         validarNome(novoCliente.getNome());
         validarCpf(novoCliente.getCpf().getValor());
+        veficarSituacao(novoCliente);
 
         return clienteRepository.save(novoCliente);
+    }
+
+    private void veficarSituacao(Cliente novoCliente) {
+        CreditoDto estadoCliente;
+        estadoCliente = creditoApiClient.verificarSituacao(novoCliente.getCpf().getValor());
+
+        if (estadoCliente.getSituacao().equals("NEGATIVADO"))
+            throw new ClienteExeption("Cliente Negativado! Não pode ser cadastrado");
     }
 
 

@@ -75,4 +75,8 @@ public class AnimalService {
         }
         return true;
     }
+
+    public List<Animal> listar(Long cliente) {
+        return animalRepository.findByClienteId(cliente);
+    }
 }

@@ -1,11 +1,12 @@
 package br.com.tt.petshop.service;
 
+import br.com.tt.petshop.client.CreditoApiClient;
+import br.com.tt.petshop.client.CreditoApiRTClient;
 import br.com.tt.petshop.exeption.AnimalExeption;
 import br.com.tt.petshop.exeption.ClienteExeption;
 import br.com.tt.petshop.model.Cliente;
 import br.com.tt.petshop.model.ClienteNull;
 import br.com.tt.petshop.repository.ClienteRepository;
-import org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,10 +29,12 @@ public class ClienteServiceTest {
     private ClienteService clienteService;
     @Mock
     private ClienteRepository clienteRepository;
+    @Mock
+    private CreditoApiClient creditoApiClient;
 
     @Before
     public void setUp(){
-        clienteService = new ClienteService(clienteRepository);
+        clienteService = new ClienteService(clienteRepository, creditoApiClient);
     }
 
     @Test
