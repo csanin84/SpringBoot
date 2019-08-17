@@ -2,13 +2,25 @@ package br.com.tt.petshop.dto;
 
 import br.com.tt.petshop.enums.EspecieEnum;
 
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 public class AnimalDto {
+    @Null(groups = OnPost.class)
     private Long id;
+
+    @NotBlank(message = "informe o nome do animal")
+    @Size(min =2, max = 100, message = "O nome deve conter de {min} a {max")
     private String nome;
+
+    @PastOrPresent
     private LocalDate dataNascimento;
+
+    @NotNull
     private EspecieEnum especie;
+
+    @NotNull
+    private Long clienteId;
 
     public AnimalDto() {
     }
@@ -43,5 +55,13 @@ public class AnimalDto {
 
     public void setEspecie(EspecieEnum especie) {
         this.especie = especie;
+    }
+
+    public Long getClienteId() {
+        return clienteId;
+    }
+
+    public void setClienteId(Long clienteId) {
+        this.clienteId = clienteId;
     }
 }

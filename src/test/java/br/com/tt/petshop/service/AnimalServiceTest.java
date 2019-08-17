@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.modelmapper.ModelMapper;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -30,10 +31,12 @@ public class AnimalServiceTest {
     private AnimalRepository animalRepository;
     @Mock
     private ClienteService clienteService;
+    @Mock
+    private ModelMapper mapper;
 
     @Before
     public void setUp(){
-        animalService = new AnimalService(animalRepository, clienteService);
+        animalService = new AnimalService(animalRepository, clienteService, mapper);
     }//fin setUp
 
     @Test

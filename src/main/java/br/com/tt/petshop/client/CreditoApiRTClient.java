@@ -3,13 +3,14 @@ package br.com.tt.petshop.client;
 import br.com.tt.petshop.exeption.ClienteExeption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 
-
+@Qualifier("restTemplate")
 @Component
 public class CreditoApiRTClient implements CreditoApiClient {
     private final RestTemplate restTemplate;

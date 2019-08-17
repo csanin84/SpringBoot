@@ -2,16 +2,20 @@ package br.com.tt.petshop.api;
 
 
 import br.com.tt.petshop.dto.AnimalDto;
+import br.com.tt.petshop.dto.OnPost;
+import br.com.tt.petshop.exeption.ClienteNotFoundExeption;
+import br.com.tt.petshop.exeption.dto.ApiErroDto;
+import br.com.tt.petshop.model.Animal;
 import br.com.tt.petshop.service.AnimalService;
 import io.swagger.annotations.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -56,6 +60,26 @@ public class AnimalEndpoint {
                 .map(c -> mapper.map(c, AnimalDto.class))
                 .collect(Collectors.toList()));
 
+    }
+
+    @PostMapping
+    @ApiOperation("Salva um animal")
+    public ResponseEntity create(
+            @ApiParam("Informações do animal a ser criado")
+            @RequestBody @Validated(OnPost.class) AnimalDto animalDto){
+        //Animal animalCriado = animalService.adicionar(mapper.map(animalDto, Animal.class));
+        Animal animalCriado = animalService.adicionar(animalDto);
+
+        URI location = URI.create( String.format("/animais/%d", animalCriado.getId()) );
+        return ResponseEntity.created(location).build();
+    }
+
+    @ExceptionHandler(ClienteNotFoundExeption.class) //es llamado cuando esa exepcion sea lanzada
+    public ResponseEntity handleClienteNotFoundExeption(ClienteNotFoundExeption e){
+        ApiErroDto erroDto = new ApiErroDto("cliente nao exixte", String.format("O cliente com Id: %s  não exixte",e.getClienteId()));
+        return ResponseEntity
+                .unprocessableEntity()
+                .body(erroDto);
     }
 
 }

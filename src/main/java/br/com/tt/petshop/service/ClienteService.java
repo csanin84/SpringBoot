@@ -1,12 +1,12 @@
 package br.com.tt.petshop.service;
 
 import br.com.tt.petshop.client.CreditoApiClient;
-import br.com.tt.petshop.client.CreditoApiRTClient;
 import br.com.tt.petshop.client.CreditoDto;
 import br.com.tt.petshop.exeption.AnimalExeption;
 import br.com.tt.petshop.exeption.ClienteExeption;
 import br.com.tt.petshop.model.Cliente;
 import br.com.tt.petshop.repository.ClienteRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 
@@ -20,7 +20,9 @@ public class ClienteService {
     private final ClienteRepository clienteRepository;
     private final CreditoApiClient creditoApiClient;
 
-    public ClienteService(ClienteRepository clienteRepository, CreditoApiClient creditoApiClient) {
+
+    public ClienteService(ClienteRepository clienteRepository,
+                          @Qualifier("feign") CreditoApiClient creditoApiClient) {
         this.clienteRepository = clienteRepository;
         this.creditoApiClient = creditoApiClient;
     }

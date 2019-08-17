@@ -1,7 +1,6 @@
 package br.com.tt.petshop.service;
 
 import br.com.tt.petshop.client.CreditoApiClient;
-import br.com.tt.petshop.client.CreditoApiRTClient;
 import br.com.tt.petshop.exeption.AnimalExeption;
 import br.com.tt.petshop.exeption.ClienteExeption;
 import br.com.tt.petshop.model.Cliente;
@@ -31,6 +30,8 @@ public class ClienteServiceTest {
     private ClienteRepository clienteRepository;
     @Mock
     private CreditoApiClient creditoApiClient;
+
+
 
     @Before
     public void setUp(){

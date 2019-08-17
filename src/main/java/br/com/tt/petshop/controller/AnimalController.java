@@ -54,7 +54,6 @@ public class AnimalController {
 
     @PostMapping("/animais-listar")
     public ModelAndView adicionar(Animal animal, ModelAndView mv){
-        System.out.println(animal.toString());
         try {
             animalService.adicionar(animal);
             return new ModelAndView(String.format("redirect:/animais-listar?cliente=%d", animal.getCliente().getId()));
