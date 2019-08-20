@@ -1,0 +1,8 @@
+api:
+  credito-api:
+    url: https://imersao-credito-api-pro.herokuapp.com
+
+logging:
+  level:
+    feing: debug
+    root: into

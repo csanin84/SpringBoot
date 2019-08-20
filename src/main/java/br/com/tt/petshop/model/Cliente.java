@@ -34,6 +34,12 @@ public class Cliente {
 
     public Cliente(){}
 
+    public Cliente(Long id, String nome, String cpf) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = new Cpf(cpf);
+    }
+
     public static  Cliente newClienteById(Long id){
         Cliente cliente = new ClienteNull();
         cliente.setId(id);
