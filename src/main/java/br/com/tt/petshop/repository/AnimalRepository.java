@@ -33,6 +33,9 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
 
     List<Animal> findByClienteIdAndNome(Long aLong, String s);
 
+    @Query("SELECT a FROM Animal a WHERE a.unidade.id = :unidadeId ORDER BY a.cliente.id")
+    List<Animal>findByUnidadeIdAndClienteId(@Param("unidadeId")Long unidadeId);
+
 
     /*List<Animal> animais = new ArrayList<>(Arrays.asList(
             new Animal("Rex", LocalDate.now(), EspecieEnum.MAMIFERO, 1l),

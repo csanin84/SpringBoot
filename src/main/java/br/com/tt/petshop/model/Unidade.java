@@ -1,6 +1,7 @@
 package br.com.tt.petshop.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "TB_UNIDADE")
@@ -47,4 +48,6 @@ public class Unidade {
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
+
+
 }
